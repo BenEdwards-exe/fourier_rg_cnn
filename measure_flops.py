@@ -20,8 +20,17 @@ def print_fourier_model_flops():
         model = FourierModel(batch_size=batch_size)
 
         input_shape = (1, 150, 150, 1)
-        input_real = tf.compat.v1.Variable(dtype=tf.float32, initial_value=tf.zeros(input_shape))
-        input_imag = tf.compat.v1.Variable(dtype=tf.float32, initial_value=tf.zeros(input_shape))
+        input_spatial = tf.compat.v1.Variable(dtype=tf.float32, initial_value=tf.zeros(input_shape))
+        # BHWC -> BCHW
+        input_spatial_trans = tf.transpose(input_spatial, [0, 3, 1, 2])
+        # FFT input image
+        input_fft = tf.signal.fft2d(tf.cast(input_spatial_trans, tf.complex64))
+        # BCHW -> BHWC
+        input_fft = tf.transpose(input_fft, [0, 2, 3, 1])
+        # Seperate real and imaginary input components
+        input_real = tf.math.real(input_fft)
+        input_imag = tf.math.imag(input_fft)
+
         inputs = (input_real, input_imag)
 
         output = model.call(inputs=inputs, training=False)
