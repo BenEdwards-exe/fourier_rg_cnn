@@ -19,7 +19,7 @@ def element_wise_multiply(input_data_real, input_data_imag, kernels_real, kernel
         ac = tf.math.multiply(input_slice_real, kernels_real)
         bd = tf.math.multiply(input_slice_imag, kernels_imag)
         ad = tf.math.multiply(input_slice_real, kernels_imag)
-        bc = tf.math.multiply(input_slice_imag, kernels_imag)
+        bc = tf.math.multiply(input_slice_imag, kernels_real)
 
         out_slice_real = ac + bd
         out_slice_imag = bc - ad
