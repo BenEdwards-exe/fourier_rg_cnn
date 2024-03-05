@@ -10,6 +10,7 @@ def element_wise_multiply(input_data_real, input_data_imag, kernels_real, kernel
     output_list_imag = []
 
     for index in range(input_shape[0]):
+        # H,W,C_in -> H,W,C_in,1
         input_slice_real = tf.expand_dims(input_data_real[index], -1)
         input_slice_imag = tf.expand_dims(input_data_imag[index], -1)
         # Cross correlation (take conjugate)
@@ -216,8 +217,10 @@ class ComplexDropoutLayer(tf.keras.layers.Layer):
             out_imag = self.mul_imag([out_imag, drop_ratio_imag])
 
         else:
-            out_real = self.mul_real([inputs_real, relu_ratio_real])
-            out_imag = self.mul_imag([inputs_imag, relu_ratio_imag])
+            # out_real = self.mul_real([inputs_real, relu_ratio_real])
+            # out_imag = self.mul_imag([inputs_imag, relu_ratio_imag])
+            out_real = inputs_real
+            out_imag = inputs_imag
 
         return out_real, out_imag
     
