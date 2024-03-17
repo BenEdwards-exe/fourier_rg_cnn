@@ -163,7 +163,7 @@ class ComplexDenseLayer(tf.keras.layers.Layer):
     def __init__(self, n_neurons, **kwargs):
         super().__init__(**kwargs)
         self.n_neurons = n_neurons
-        # TODO: why is there no activation?
+ 
         self.fc_real = tf.keras.layers.Dense(self.n_neurons, activation=None)
         self.fc_imag = tf.keras.layers.Dense(self.n_neurons, activation=None)
 
@@ -277,7 +277,8 @@ class FourierModel(tf.keras.models.Model):
         self.num_classes = 3
         self.batch_size = batch_size
         # self.output_channel = [64, 128, 256, 512, 512]
-        self.output_channel = [32, 32, 64, 128, 256]
+        # self.output_channel = [32, 32, 64, 128, 256]
+        self.output_channel = [32, 32, 64, 64, 128]
         # self.output_channel = [32, 32, 64, 128, 256]
         self.fourier_layer_droprate = 0.5
         self.fully_connected_droprate = 0.5

@@ -192,4 +192,7 @@ def prepare_local_copy(n_augmentations=24):
 
 if __name__ == "__main__":
     
-    prepare_local_copy(n_augmentations=24)
+    isLocalExist = False
+
+    if (isLocalExist):
+        prepare_local_copy(n_augmentations=24)

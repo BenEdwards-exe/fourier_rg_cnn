@@ -3,3 +3,6 @@ __pycache__/
 *.py[cod]
 crumb
 data
+C_Implementation/test_images
+C_Implementation/trained_weights
+C_Implementation/weight_files
