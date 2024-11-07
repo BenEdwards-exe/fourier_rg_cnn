@@ -7,3 +7,4 @@ model_results
 C_Implementation/test_images
 C_Implementation/trained_weights
 C_Implementation/weight_files
+at17_fourier_model.ipynb
