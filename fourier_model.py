@@ -163,7 +163,7 @@ class ComplexDenseLayer(tf.keras.layers.Layer):
     def __init__(self, n_neurons, **kwargs):
         super().__init__(**kwargs)
         self.n_neurons = n_neurons
-        # TODO: why is there no activation?
+ 
         self.fc_real = tf.keras.layers.Dense(self.n_neurons, activation=None)
         self.fc_imag = tf.keras.layers.Dense(self.n_neurons, activation=None)
 
