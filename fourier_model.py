@@ -39,7 +39,7 @@ def element_wise_multiply(input_data_real, input_data_imag, kernels_real, kernel
 
 
 class FourierConvLayer(tf.keras.layers.Layer):
-    def __init__(self, input_feature_shape, output_channels, filter_size=3, use_bias=False, activation=None, **kwargs):
+    def __init__(self, input_feature_shape, output_channels, filter_size=3, use_bias=False, **kwargs):
         super().__init__(**kwargs)
 
         self.input_feature_shape = input_feature_shape # BHWC (freq domain)
@@ -93,7 +93,7 @@ class FourierConvLayer(tf.keras.layers.Layer):
             )
 
 
-    def call(self, inputs, training, isFeatFix=False):
+    def call(self, inputs, training):
         inputs_real = inputs[0]
         inputs_imag = inputs[1]
 
@@ -203,22 +203,14 @@ class ComplexDropoutLayer(tf.keras.layers.Layer):
 
         [batch_size, height, width, channels] = inputs_real.shape
 
-        relu_ratio_real = tf.random.normal(shape=[batch_size, height, width, channels], mean=1.0, stddev= self.droprate/6)
-        relu_ratio_imag = tf.random.normal(shape=[batch_size, height, width, channels], mean=1.0, stddev= self.droprate/6)
-
         if training:
             drop_ratio_real = tf.random.normal(shape=[batch_size, height, width, channels], mean=1.0, stddev=self.droprate/2)
             drop_ratio_imag = tf.random.normal(shape=[batch_size, height, width, channels], mean=1.0, stddev=self.droprate/2)
 
-            out_real = self.mul_real([inputs_real, relu_ratio_real])
             out_real = self.mul_real([out_real, drop_ratio_real])
-
-            out_imag = self.mul_imag([inputs_imag, relu_ratio_imag])
             out_imag = self.mul_imag([out_imag, drop_ratio_imag])
 
         else:
-            # out_real = self.mul_real([inputs_real, relu_ratio_real])
-            # out_imag = self.mul_imag([inputs_imag, relu_ratio_imag])
             out_real = inputs_real
             out_imag = inputs_imag
 
@@ -276,9 +268,9 @@ class FourierModel(tf.keras.models.Model):
 
         self.num_classes = 3
         self.batch_size = batch_size
-        # self.output_channel = [64, 128, 256, 512, 512]
+
         self.output_channel = [32, 32, 64, 128, 256]
-        # self.output_channel = [32, 32, 64, 128, 256]
+
         self.fourier_layer_droprate = 0.5
         self.fully_connected_droprate = 0.5
 
@@ -325,12 +317,6 @@ class FourierModel(tf.keras.models.Model):
         self.dropout_5 = ComplexDropoutLayer(droprate=self.fourier_layer_droprate)
         self.pooling_5 = ComplexPoolLayer(pooling_window_size=2, feature_size=[self.batch_size, 9, 9, self.output_channel[4]])
         # self.pooling_5 = ComplexPoolLayer(pooling_window_size=2, feature_size=[self.batch_size, 4, 4, self.output_channel[4]])
-
-
-        # ## --- Block 6 --- ##
-        # self.fourier_conv_6 = FourierConvLayer([self.batch_size, 4, 4, self.output_channel[4]], self.output_channel[4])
-        # self.dropout_6 = ComplexDropoutLayer(droprate=self.fourier_layer_droprate)
-        # self.pooling_6 = ComplexPoolLayer(pooling_window_size=2, feature_size=[self.batch_size, 4, 4, self.output_channel[4]])
 
 
 
