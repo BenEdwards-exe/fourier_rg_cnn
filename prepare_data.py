@@ -66,27 +66,27 @@ def prepare_all_data(random_seed, isAugment=True, isNormalise=True, isPrint=Fals
 
         print("-"*5+" Train Data "+"-"*5)
         count = count_labels(y_train)
-        print(f"{classes[0]}:\t{count[0]}\t({count[0]*15})")
-        print(f"{classes[1]}:\t{count[1]}\t({count[1]*15})")
-        print(f"{classes[2]}:\t{count[2]}\t({count[2]*15})")
-        print(f"Total:\t{y_train.shape[0]}\t({y_train.shape[0]*15})")
+        print(f"{classes[0]}:\t{count[0]}\t({count[0]*24})")
+        print(f"{classes[1]}:\t{count[1]}\t({count[1]*24})")
+        print(f"{classes[2]}:\t{count[2]}\t({count[2]*24})")
+        print(f"Total:\t{y_train.shape[0]}\t({y_train.shape[0]*24})")
         print("-"*22)
 
 
         print("-"*2+" Validation Data "+"-"*3)
         count = count_labels(y_valid)
-        print(f"{classes[0]}:\t{count[0]}\t({count[0]*15})")
-        print(f"{classes[1]}:\t{count[1]}\t({count[1]*15})")
-        print(f"{classes[2]}:\t{count[2]}\t({count[2]*15})")
-        print(f"Total:\t{y_valid.shape[0]}\t({y_valid.shape[0]*15})")
+        print(f"{classes[0]}:\t{count[0]}\t({count[0]*24})")
+        print(f"{classes[1]}:\t{count[1]}\t({count[1]*24})")
+        print(f"{classes[2]}:\t{count[2]}\t({count[2]*24})")
+        print(f"Total:\t{y_valid.shape[0]}\t({y_valid.shape[0]*24})")
         print("-"*22)
 
         print("-"*5+" Test Data "+"-"*6)
         count = count_labels(y_test)
-        print(f"{classes[0]}:\t{count[0]}\t({count[0]*15})")
-        print(f"{classes[1]}:\t{count[1]}\t({count[1]*15})")
-        print(f"{classes[2]}:\t{count[2]}\t({count[2]*15})")
-        print(f"Total:\t{y_test.shape[0]}\t({y_test.shape[0]*15})")
+        print(f"{classes[0]}:\t{count[0]}\t({count[0]*24})")
+        print(f"{classes[1]}:\t{count[1]}\t({count[1]*24})")
+        print(f"{classes[2]}:\t{count[2]}\t({count[2]*24})")
+        print(f"Total:\t{y_test.shape[0]}\t({y_test.shape[0]*24})")
         print("-"*22)
 
     # Agument Dataset
@@ -132,4 +132,4 @@ def augment_with_rotations(x, y, n_rotations):
     return np.array(x_rotate_temp), np.array(y_rotate_temp)
 
 if __name__ == "__main__":
-    x_train, y_train, x_valid, y_valid, x_test, y_test = prepare_all_data(12, isPrint=True)
+    x_train, y_train, x_valid, y_valid, x_test, y_test = prepare_all_data(random_seed=12, isPrint=True)
