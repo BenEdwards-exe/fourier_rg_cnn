@@ -1,11 +1,12 @@
 import numpy as np
 import tensorflow as tf
+import os
 
 
 # Read in weights of a conv layer and generate text file with fft'd valued
 def conv_layer_weights():
 
-    filter_weights = np.load("C_Implementation/trained_weights/weight_spatial_0.npy")
+    filter_weights = np.load("./C_Implementation/trained_weights/weight_spatial_0.npy")
     fft_weights_and_save(filter_weights, 1)
     filter_weights = np.load("C_Implementation/trained_weights/weight_spatial_1.npy")
     fft_weights_and_save(filter_weights, 2)
@@ -243,12 +244,11 @@ def dense_layer_weights():
 
 
 
-        
-
-
-
 
 if __name__ == "__main__":
+    if not os.path.isdir("./C_Implementation/weight_files"):
+        os.mkdir("./C_Implementation/weight_files")
+
     conv_layer_weights()
     b_norm_layer_weights()
     dense_layer_weights()

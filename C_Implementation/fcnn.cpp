@@ -301,11 +301,15 @@ int main() {
 
 
 
-    // For testing
+    // Probabilities for image
+    std::cout << "Probabilities\n";
+    const char* classes[] = {"FRI", "FRII", "Bent"};
     float arr[3] = {0};
     for (int i = 0; i < 3; i++) {
         arr[i] = *(predictions+ i);
+        std::cout << classes[i] << ":\t" << arr[i] << "\n";
     }
+
 
 
     return 0;
